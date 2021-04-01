@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\vn;
+namespace Drupal\vnd;
 
 class Arrays
 {
