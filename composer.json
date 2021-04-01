@@ -1,5 +1,5 @@
 {
-    "name": "grimtron/vn_drupal-core",
+    "name": "grimtron/vnd",
     "type": "drupal-module",
     "description": "Contains base classes, boilerplate code etc. that are common for different Drupal projects"
 }
