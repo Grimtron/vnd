@@ -1,0 +1,7 @@
+name: VND
+package: VN
+description: VN drupal main module.
+type: module
+core_version_requirement: ^8.8.0 || ^9.0
+
+  
