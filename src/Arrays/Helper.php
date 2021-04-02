@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\vnd\Array;
+namespace Drupal\vnd\Arrays;
 
 class Helper
 {
