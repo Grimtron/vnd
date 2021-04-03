@@ -1,8 +1,8 @@
 <?php
 
-namespace Drupal\vnd\Arrays;
+namespace Drupal\vnd;
 
-class Helper
+class Arrays
 {
     public static function ImplodeNonEmptyValues($glue, ...$parameters)
     {
