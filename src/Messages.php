@@ -19,14 +19,38 @@ class Messages
      */
     public static function showResultMessage($result)
     {
-        if ($result['status'])
+        $messageObject = null;
+
+        if (is_array($result))
         {
-            \Drupal::messenger()->addMessage($result['message']);
+            $messageObject = new \Drupal\vnd\Model\ResultMessage();
+            $messageObject->Message = $result['message'];
+            $messageObject->Status = $result['status'] ? \Drupal\vnd\Model\ResultMessage::STATUS_OK : \Drupal\vnd\Model\ResultMessage::STATUS_ERROR;
         }
         else
         {
-            \Drupal::messenger()->addError($result['message']);
+            /** @var \Drupal\vnd\Model\ResultMessage $messageObject */
+            $messageObject = $result;
         }
+        
+        if ($messageObject->IsOk())
+        {
+            \Drupal::messenger()->addMessage($messageObject->Message);
+        }
+        else
+        {
+            \Drupal::messenger()->addError($messageObject->Message);
+        }
+    }
+
+    public static function showErrorMessage($message)
+    {
+        self::showResultMessage(\Drupal\vnd\Model\ResultMessage::CreateErrorMessage($message));
+    }
+
+    public static function showSuccessMessage($message)
+    {
+        self::showResultMessage(\Drupal\vnd\Model\ResultMessage::CreateSuccessMessage($message));
     }
 }
 ?>
