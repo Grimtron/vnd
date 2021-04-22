@@ -89,5 +89,21 @@ class Strings
 
     return false;
   }
+
+  /**
+   * Prüft, ob eine Zeichenkette mit einer Ziffer anfängt.
+   *
+   * @param string $text der zu prüfende Text
+   * @return bool true, falls die Zeichenkette mit einer Ziffer beginnt, false, falls sie nicht mit einer Ziffer beginnt oder leer/null ist.
+   */
+  public static function StartsWithDigit($text)
+  {
+    if ($text == null || strlen($text) == 0)
+    {
+      return false;
+    }
+
+    return is_numeric($text[0]);
+  }
 }
 ?>
