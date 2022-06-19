@@ -1,4 +1,5 @@
 <?php
+
 namespace Drupal\vnd;
 
 class Mail
@@ -7,6 +8,8 @@ class Mail
     {
         $mailManager = \Drupal::service('plugin.manager.mail');
         $params['message'] = $message;
+        $params['myParameter'] = "mein wert";
+        $params['[myParameter]'] = "mein wert 2";
 
         $langcode = "en";
         $send = true;
@@ -24,6 +27,14 @@ class Mail
 
         return $results;
     }
-}
 
-?>
+    public static function SendMailSymfony($template, $recipients, $subject, $mailParameters)
+    {
+        $factory = \Drupal::service('email_factory');
+        $email = $factory->newModuleEmail('wac', 'default');
+        $email->setTo($recipients);
+        $email->setSubject($subject);
+        $email->setBody(['#theme' => $template, "#params" => $mailParameters]);
+        return $email->send();
+    }
+}
