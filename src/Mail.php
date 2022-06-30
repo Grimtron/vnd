@@ -45,6 +45,8 @@ class Mail
     {
         /** @var \Drupal\symfony_mailer\EmailFactory */
         $factory = \Drupal::service('email_factory');
+
+        /** @var \Drupal\symfony_mailer\Email */
         $email = $factory->newModuleEmail($module, $subType);
 
         if ($variables)
@@ -57,9 +59,16 @@ class Mail
 
         if (isset($overrides['to']))
         {
-            $email->setTo($overrides['to']);
+            $displayName = null;
+
+            $langcode = isset($overrides['language']) ? $overrides['language'] : null;
+            $account = isset($overrides['account']) ? $overrides['account'] : null;
+
+            $symfonyAddress = new \Drupal\symfony_mailer\Address($overrides['to'], $displayName, $langcode, $account);
+            $email->setTo($symfonyAddress);
         }
 
-        return $email->send();
+        $mailSend = $email->send();
+        return $mailSend;
     }
 }
