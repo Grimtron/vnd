@@ -30,11 +30,36 @@ class Mail
 
     public static function SendMailSymfony($template, $recipients, $subject, $mailParameters)
     {
+        /** @var \Drupal\symfony_mailer\EmailFactory */
         $factory = \Drupal::service('email_factory');
-        $email = $factory->newModuleEmail('wac', 'default');
-        $email->setTo($recipients);
-        $email->setSubject($subject);
-        $email->setBody(['#theme' => $template, "#params" => $mailParameters]);
+        $email = $factory->newModuleEmail('wac', 'safety_box_order'); //, ["module" => 'wac']);
+        $email->setVariable("myparam", 555);
+        //$email->setParam("myparam", 555);
+        //$email->setTo($recipients);
+        // $email->setSubject($subject);
+        //$email->setBody(['#theme' => $template, "#params" => $mailParameters]);
+        return $email->send();
+    }
+
+    public static function SendSymfony($module, $subType, $variables, $overrides = [])
+    {
+        /** @var \Drupal\symfony_mailer\EmailFactory */
+        $factory = \Drupal::service('email_factory');
+        $email = $factory->newModuleEmail($module, $subType);
+
+        if ($variables)
+        {
+            foreach ($variables as $key => $value)
+            {
+                $email->setVariable($key, $value);
+            }
+        }
+
+        if (isset($overrides['to']))
+        {
+            $email->setTo($overrides['to']);
+        }
+
         return $email->send();
     }
 }
